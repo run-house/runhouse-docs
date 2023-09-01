@@ -153,7 +153,7 @@ To confirm the installation succeeded, run ``aws --version`` in the command line
 The AWS Systems Manager service is used to create SSH tunnels with the SageMaker cluster.
 
 To install the AWS Session Manager Plugin, please see the `AWS docs <https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html>`_
-or `SageMaker SSH Helper <https://https://github.com/aws-samples/sagemaker-ssh-helper>`_. The SSH Helper package
+or `SageMaker SSH Helper <https://github.com/aws-samples/sagemaker-ssh-helper#step-4-connect-over-ssm>`_. The SSH Helper package
 simplifies the process of creating SSH tunnels with SageMaker clusters. It is installed by default if
 you are installing Runhouse with the SageMaker dependency: :code:`pip install runhouse[sagemaker]`.
 
