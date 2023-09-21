@@ -30,6 +30,7 @@ etc.):
    $ pip install "runhouse[aws]"
    $ pip install "runhouse[gcp]"
    $ pip install "runhouse[azure]"
+   $ pip install "runhouse[sagemaker]"
    # Or
    $ pip install "runhouse[all]"
 
@@ -77,6 +78,10 @@ password ready:
                   ips=['<ip of the cluster>'],
                   ssh_creds={'ssh_user': '<user>', 'password':'******'},
               )
+
+.. note::
+
+    For more information see the :ref:`Cluster Class` section.
 
 On-Demand Cluster
 ~~~~~~~~~~~~~~~~~
@@ -140,12 +145,42 @@ function on it later in this tutorial.
                   provider="cheapest",      # options: "AWS", "GCP", "Azure", "Lambda", or "cheapest"
               ).save()
 
+.. note::
+
+    For more information and hardware setup see the :ref:`OnDemandCluster Class` section.
+
+SageMaker Cluster
+~~~~~~~~~~~~~~~~~
+
+Runhouse facilitates easy access to existing or new SageMaker compute.
+Just provide your SageMaker execution role ARN or have it configured in your local environment.
+
+.. code:: ipython3
+
+    # Launch a new SageMaker instance and keep it up indefinitely
+    cluster = rh.sagemaker_cluster(name='sm-cluster', profile="sagemaker").save()
+
+    # Running a training job with a provided Estimator
+    pytorch_estimator = PyTorch(entry_point='train.py',
+                                role='arn:aws:iam::123456789012:role/MySageMakerRole',
+                                source_dir='/Users/myuser/dev/sagemaker',
+                                framework_version='1.8.1',
+                                py_version='py36',
+                                instance_type='ml.p3.2xlarge')
+
+    cluster = rh.sagemaker_cluster(name='sagemaker-cluster',
+                                   estimator=pytorch_estimator).save()
+
+.. note::
+
+    For more information and hardware setup see the :ref:`SageMakerCluster Class` section.
+
 Secrets and Portability
 -----------------------
 
 Using Runhouse with only the OSS Python package is perfectly fine, but
 you can unlock some unique portability features by creating an (always
-free) `account <https://api.run.house/>`__ and saving down your secrets
+free) `account <https://www.run.house/>`__ and saving down your secrets
 and/or resource metadata there.
 
 Think of the OSS-package-only experience as akin to Microsoft Office,
@@ -161,13 +196,10 @@ up your local credentials again. To delete any local credentials or
 remove secrets from Runhouse, you can call ``runhouse logout`` or
 ``rh.logout()``.
 
-Some notes on security \* Our API servers only ever store light metadata
-about your resources (e.g. folder name, cloud provider, storage bucket,
-path). All actual data and compute stays inside your own cloud account
-and never hits our servers. \* Secrets are stored in `Hashicorp
-Vault <https://www.vaultproject.io/>`__ (an industry standard for
-secrets management), never on our API servers, and our APIs simply call
-into Vault’s APIs.
+Some notes on security:
+
+* Our API servers only ever store light metadata about your resources (e.g. folder name, cloud provider, storage bucket, path). All actual data and compute stays inside your own cloud account and never hits our servers.
+* Secrets are stored in `Hashicorp Vault <https://www.vaultproject.io/>`__ (an industry standard for secrets management), never on our API servers, and our APIs simply call into Vault’s APIs.
 
 .. code:: ipython3
 
@@ -184,7 +216,7 @@ launched through Runhouse, bridging the gap between local and remote.
 Additionally, save, reuse, and share any of your Runhouse Resources.
 
 Please first make sure that you have successfully followed the
-Installation and Cluster Setup sections above prior to running this
+`Installation <installation_>`_ and `Cluster Setup <#cluster-setup>`_ sections above prior to running this
 example.
 
 .. code:: ipython3
@@ -209,6 +241,7 @@ CPUs available.
 
 
 .. parsed-literal::
+    :class: code-output
 
     'Num cpus: 10'
 
@@ -260,6 +293,7 @@ instead of local.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 03:03:52.826786 | Writing out function function to /Users/caroline/Documents/runhouse/runhouse/docs/notebooks/basics/num_cpus_fn.py. Please make sure the function does not rely on any local variables, including imports (which should be moved inside the function body).
     /Users/caroline/Documents/runhouse/runhouse/runhouse/rns/function.py:106: UserWarning: ``reqs`` and ``setup_cmds`` arguments has been deprecated. Please use ``env`` instead.
@@ -274,6 +308,7 @@ instead of local.
 
 
 .. parsed-literal::
+    :class: code-output
 
     base servlet: Calling method install on module env_20230829_030349
     Installing package: Package: runhouse
@@ -284,6 +319,7 @@ instead of local.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 03:03:58.230209 | Time to call env_20230829_030349.install: 1.75 seconds
     INFO | 2023-08-29 03:03:58.462054 | Function setup complete.
@@ -295,16 +331,19 @@ instead of local.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 03:04:01.105011 | Calling num_cpus_cluster.call
 
 
 .. parsed-literal::
+    :class: code-output
 
     base servlet: Calling method call on module num_cpus_cluster
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 03:04:01.384439 | Time to call num_cpus_cluster.call: 0.28 seconds
 
@@ -312,6 +351,7 @@ instead of local.
 
 
 .. parsed-literal::
+    :class: code-output
 
     'Num cpus: 8'
 
@@ -330,8 +370,9 @@ environment, or share it with your collaborators.
 
 
 .. parsed-literal::
+    :class: code-output
 
-    <runhouse.rns.function.Function at 0x104634ee0>
+    <runhouse.resources.function.Function at 0x104634ee0>
 
 
 
@@ -343,7 +384,7 @@ environment, or share it with your collaborators.
     )
 
 Now, you, or whoever you shared it with, can reload this function from
-anther dev environment (like a different Colab, local, or on a cluster),
+another dev environment (like a different Colab, local, or on a cluster),
 as long as you are logged in to your Runhouse account.
 
 .. code:: ipython3
@@ -353,6 +394,7 @@ as long as you are logged in to your Runhouse account.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 03:04:24.820884 | Checking server cpu-cluster
     INFO | 2023-08-29 03:04:25.850301 | Server cpu-cluster is up.
@@ -360,11 +402,13 @@ as long as you are logged in to your Runhouse account.
 
 
 .. parsed-literal::
+    :class: code-output
 
     base servlet: Calling method call on module num_cpus_cluster
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 03:04:26.127098 | Time to call num_cpus_cluster.call: 0.27 seconds
 
@@ -372,6 +416,7 @@ as long as you are logged in to your Runhouse account.
 
 
 .. parsed-literal::
+    :class: code-output
 
     'Num cpus: 8'
 

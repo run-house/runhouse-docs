@@ -44,10 +44,22 @@ Python commands from your local dev environment.
 Initialize your Cluster
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-There are two types of supported cluster types: 1. Bring-your-own (BYO)
-Cluster, one that you have access to through an IP address and SSH
-credentials. 2. On-Demand/Auto Cluster one that is associated with your
-cloud account, and automatically spun up/down for you.
+There are three types of supported cluster types:
+
+1. **Bring-your-own (BYO) Cluster**: Existing clusters that you
+   already have up, and access through an IP address and SSH
+   credentials. Please refer to the :ref:`Bring-Your-Own Cluster` section for further instructions.
+
+2. **On-demand Cluster**: Associated with your cloud account (AWS, GCP,
+   Azure, LambdaLabs). There are additional features for these clusters,
+   such as cluster (auto) stop. Please refer to
+   :ref:`On-Demand Cluster` for instructions on first getting
+   cloud credentials set up.
+
+3. **SageMaker Cluster (Alpha)**: Clusters that are created and managed
+   through SageMaker, which can be used as a compute backend (just like BYO or On-Demand clusters)
+   or for running dedicated training jobs. Please refer to the :ref:`SageMaker Cluster` section for instructions on
+   getting setup with SageMaker.
 
 Each cluster must be provided with a unique ``name`` identifier during
 construction. This ``name`` parameter is used for saving down or loading
@@ -76,7 +88,15 @@ cluster.
                   provider="cheapest",       # "AWS", "GCP", "Azure", "Lambda", or "cheapest" (default)
                   autostop_mins=60,          # Optional, defaults to default_autostop_mins; -1 suspends autostop
               )
-    # Launch the cluster, only supported for on-demand clusters
+    # Launch the cluster
+    cluster.up()
+
+    # Using SageMaker as the compute provider
+    cluster = rh.sagemaker_cluster(
+                  name="sm-cluster",
+                  profile="sagemaker" # AWS profile with a role ARN configured for SageMaker
+              )
+    # Launch the cluster
     cluster.up()
 
 You can set default configs for future cluster constructions. These
@@ -102,18 +122,21 @@ To run CLI or Python commands on the cluster:
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 03:35:44.910826 | Running command on cpu-cluster: pip install numpy && pip freeze | grep numpy
     Warning: Permanently added '34.205.23.213' (ED25519) to the list of known hosts.
 
 
 .. parsed-literal::
+    :class: code-output
 
     Requirement already satisfied: numpy in /opt/conda/lib/python3.10/site-packages (1.25.2)
     numpy==1.25.2
 
 
 .. parsed-literal::
+    :class: code-output
 
     [(0,
       'Requirement already satisfied: numpy in /opt/conda/lib/python3.10/site-packages (1.25.2)\nnumpy==1.25.2\n',
@@ -127,17 +150,20 @@ To run CLI or Python commands on the cluster:
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 03:35:50.911455 | Running command on cpu-cluster: python3 -c "import numpy; print(numpy.__version__)"
 
 
 .. parsed-literal::
+    :class: code-output
 
     1.25.2
 
 
 
 .. parsed-literal::
+    :class: code-output
 
     [(0, '1.25.2\n', '')]
 
@@ -201,6 +227,7 @@ wrap it using ``rh.function``, and specify ``system=cluster``.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 03:59:14.328987 | Writing out function function to /Users/caroline/Documents/runhouse/runhouse/docs/notebooks/basics/getpid_fn.py. Please make sure the function does not rely on any local variables, including imports (which should be moved inside the function body).
     INFO | 2023-08-29 03:59:14.332706 | Setting up Function on cluster.
@@ -214,6 +241,7 @@ wrap it using ``rh.function``, and specify ``system=cluster``.
 
 
 .. parsed-literal::
+    :class: code-output
 
     base servlet: Calling method install on module env_20230829_035913
     Installing package: Package: runhouse
@@ -224,6 +252,7 @@ wrap it using ``rh.function``, and specify ``system=cluster``.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 03:59:22.728154 | Time to call env_20230829_035913.install: 1.91 seconds
     INFO | 2023-08-29 03:59:22.981633 | Function setup complete.
@@ -239,22 +268,26 @@ and the function automatically runs on your specified hardware!
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 03:59:43.821391 | Calling getpid.call
 
 
 .. parsed-literal::
+    :class: code-output
 
     local function result: 7592
     base servlet: Calling method call on module getpid
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 03:59:44.078775 | Time to call getpid.call: 0.26 seconds
 
 
 .. parsed-literal::
+    :class: code-output
 
     remote function result: 1382396
 
@@ -283,6 +316,7 @@ to clone the repo ourselves or reimplement the function locally.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:00:01.870718 | Setting up Function on cluster.
     INFO | 2023-08-29 04:00:01.873021 | Copying package from file:///Users/caroline/Documents/runhouse/runhouse to: cpu-cluster
@@ -291,6 +325,7 @@ to clone the repo ourselves or reimplement the function locally.
 
 
 .. parsed-literal::
+    :class: code-output
 
     base servlet: Calling method install on module env_20230829_035957
     Installing package: GitPackage: https://github.com/run-house/runhouse.git@main
@@ -310,6 +345,7 @@ to clone the repo ourselves or reimplement the function locally.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:00:08.100045 | Time to call env_20230829_035957.install: 3.47 seconds
     INFO | 2023-08-29 04:00:08.275688 | Function setup complete.
@@ -321,16 +357,19 @@ to clone the repo ourselves or reimplement the function locally.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:00:12.015937 | Calling getpid.call
 
 
 .. parsed-literal::
+    :class: code-output
 
     base servlet: Calling method call on module getpid
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:00:12.285294 | Time to call getpid.call: 0.27 seconds
 
@@ -338,6 +377,7 @@ to clone the repo ourselves or reimplement the function locally.
 
 
 .. parsed-literal::
+    :class: code-output
 
     1382397
 
@@ -358,16 +398,19 @@ in notebooks without locking up the kernel.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:42:17.026532 | Calling getpid.call
 
 
 .. parsed-literal::
+    :class: code-output
 
     base servlet: Calling method call on module getpid
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:42:17.900012 | Time to call getpid.call: 0.87 seconds
 
@@ -375,8 +418,9 @@ in notebooks without locking up the kernel.
 
 
 .. parsed-literal::
+    :class: code-output
 
-    <runhouse.rns.blobs.blob.Blob at 0x154dab3d0>
+    <runhouse.resources.blobs.blob.Blob at 0x154dab3d0>
 
 
 
@@ -389,6 +433,7 @@ To retrieve the data from the returned remote object, you can call
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:42:18.626515 | Getting getpid_call_20230829_044209_708686
     INFO | 2023-08-29 04:42:18.780105 | Time to get getpid_call_20230829_044209_708686: 0.15 seconds
@@ -397,6 +442,7 @@ To retrieve the data from the returned remote object, you can call
 
 
 .. parsed-literal::
+    :class: code-output
 
     1382396
 
@@ -412,6 +458,7 @@ that can be used to retrieve the results and logs at a later point.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:42:20.182323 | Calling getpid.call
     INFO | 2023-08-29 04:42:20.318719 | Time to call getpid.call: 0.14 seconds
@@ -420,6 +467,7 @@ that can be used to retrieve the results and logs at a later point.
 
 
 .. parsed-literal::
+    :class: code-output
 
     'getpid_call_20230829_044212_868665'
 
@@ -434,6 +482,7 @@ To retrieve the result of the function run, you can call
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:42:28.747188 | Getting getpid_call_20230829_044212_868665
     INFO | 2023-08-29 04:42:28.875886 | Time to get getpid_call_20230829_044212_868665: 0.13 seconds
@@ -442,6 +491,7 @@ To retrieve the result of the function run, you can call
 
 
 .. parsed-literal::
+    :class: code-output
 
     1382396
 
@@ -462,16 +512,19 @@ To stream logs to local during the remote function call, pass in
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:43:17.812658 | Calling getpid.call
 
 
 .. parsed-literal::
+    :class: code-output
 
     base servlet: Calling method call on module getpid
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:43:18.107531 | Time to call getpid.call: 0.29 seconds
 
@@ -479,6 +532,7 @@ To stream logs to local during the remote function call, pass in
 
 
 .. parsed-literal::
+    :class: code-output
 
     1382396
 
@@ -486,8 +540,99 @@ To stream logs to local during the remote function call, pass in
 
 Function logs are also automatically output onto a log file on cluster
 it is run on. You can refer to `Runhouse Logging
-Docs <https://runhouse-docs.readthedocs-hosted.com/en/latest/debugging_logging.html>`__
+Docs <https://www.run.house/docs/debugging_logging>`__
 for more information on accessing these logs.
+
+Modules
+-------
+
+In addition to running basic functions remotely, Runhouse lets you
+define classes that live and are run remotely, through the Module API.
+
+Converting existing class to Runhouse Module
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have an existing non-Runhouse class that you would like to run
+remotely, you can do so as follows:
+
+::
+
+   from package import Model
+
+   RemoteModel = rh.module(cls=Model, system=cluster)
+   remote_model = RemoteModel(model_id="bert-base-uncased", device="cuda")
+   remote_model.predict("Hello world!")  # Runs on cluster
+
+Creating your own Runhouse Module
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To construct your own Runhouse Module class, simply subclass your class
+with ``rh.Module``, instantiate it locally, and then send it over to
+your cluster.
+
+Note that because this class is constructed locally prior to being sent
+over to a remote cluster, if there is a computationally heavy operation
+such as loading a dataset or model that we only want to be done
+remotely, it should be wrapped in a function and run remotely. One way
+of doing so is through lazy initialization, as in the data property of
+the module below.
+
+::
+
+   # pid_module.py
+
+   import os
+   import runhouse as rh
+
+   class PIDModule(rh.Module):
+       def __init__(self, a: int=0):
+           super().__init__()
+           self.a = a
+
+       @property
+       def data(self):
+           if not hasattr(self, '_data'):
+               self._data = load_dataset()
+           return self._data
+
+       def getpid(self):
+           return os.getpid() + self.a
+
+When working in a notebook setting, we define the class in another file,
+``pid_module.py``, and load in the module for use below. For Python
+scripts, the class can be defined in the same file as the script.
+
+.. code:: ipython3
+
+    from pid_module import PIDModule
+
+    remote_module = PIDModule(a=5).to(cluster)
+    remote_module.getpid()
+
+
+.. parsed-literal::
+    :class: code-output
+
+    INFO | 2023-09-05 19:57:10.034443 | Calling PIDModule.getpid
+
+
+.. parsed-literal::
+    :class: code-output
+
+    base servlet: Calling method getpid on module PIDModule
+
+
+.. parsed-literal::
+    :class: code-output
+
+    INFO | 2023-09-05 19:57:10.308916 | Time to call PIDModule.getpid: 0.27 seconds
+
+
+.. parsed-literal::
+    :class: code-output
+
+    21806
+
 
 Env + Packages
 --------------
@@ -556,6 +701,7 @@ automatically set up (packages are installed) on the cluster.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:44:06.955053 | Copying package from file:///Users/caroline/Documents/runhouse/runhouse to: cpu-cluster
     INFO | 2023-08-29 04:44:08.250678 | Copying package from file:///Users/caroline/Documents/runhouse/runhouse to: cpu-cluster
@@ -563,17 +709,20 @@ automatically set up (packages are installed) on the cluster.
 
 
 .. parsed-literal::
+    :class: code-output
 
     base servlet: Calling method _set_env_vars on module env_20230829_044402
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:44:10.028261 | Time to call env_20230829_044402._set_env_vars: 0.29 seconds
     INFO | 2023-08-29 04:44:10.029212 | Calling env_20230829_044402.install
 
 
 .. parsed-literal::
+    :class: code-output
 
     base servlet: Calling method install on module env_20230829_044402
     Installing package: Package: numpy
@@ -597,6 +746,7 @@ automatically set up (packages are installed) on the cluster.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:44:19.111342 | Time to call env_20230829_044402.install: 9.08 seconds
 
@@ -641,18 +791,21 @@ As with the base env, we can set up a conda env on the cluster with:
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:48:21.600485 | Copying package from file:///Users/caroline/Documents/runhouse/runhouse to: cpu-cluster
     INFO | 2023-08-29 04:48:23.132095 | Calling new_env.install
 
 
 .. parsed-literal::
+    :class: code-output
 
     new_env servlet: Calling method install on module new_env
     Env already installed, skipping
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 04:48:24.358608 | Time to call new_env.install: 1.23 seconds
 
@@ -670,16 +823,19 @@ the cluster:
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 05:14:08.725396 | Running command on cpu-cluster: conda run -n new_env python3 -c "import numpy; print(numpy.__version__)"
 
 
 .. parsed-literal::
+    :class: code-output
 
     1.25.2
 
 
 .. parsed-literal::
+    :class: code-output
 
     [(0, '1.25.2\n\n', '')]
 
@@ -690,8 +846,8 @@ the cluster:
     # install additional package on given env
     cluster.install_packages(["pandas"], env=conda_env)
 
-Putting it all together – Cluster, Function, Env
-------------------------------------------------
+Putting it all together – Cluster, Function/Module, Env
+-------------------------------------------------------
 
 Now that we understand how clusters, functions, and
 packages/environments work, we can go on to implement more complex
@@ -721,6 +877,7 @@ but can be outside the function if being used in a Python script.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 05:20:27.959315 | Writing out function function to /Users/caroline/Documents/runhouse/runhouse/docs/notebooks/basics/add_lists_fn.py. Please make sure the function does not rely on any local variables, including imports (which should be moved inside the function body).
     INFO | 2023-08-29 05:20:27.962973 | Setting up Function on cluster.
@@ -729,6 +886,7 @@ but can be outside the function if being used in a Python script.
 
 
 .. parsed-literal::
+    :class: code-output
 
     base servlet: Calling method install on module env_20230829_052021
     Installing package: Package: numpy
@@ -742,6 +900,7 @@ but can be outside the function if being used in a Python script.
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 05:20:32.575986 | Time to call env_20230829_052021.install: 3.17 seconds
     INFO | 2023-08-29 05:20:32.774676 | Function setup complete.
@@ -749,11 +908,13 @@ but can be outside the function if being used in a Python script.
 
 
 .. parsed-literal::
+    :class: code-output
 
     base servlet: Calling method call on module add_lists
 
 
 .. parsed-literal::
+    :class: code-output
 
     INFO | 2023-08-29 05:20:33.086075 | Time to call add_lists.call: 0.29 seconds
 
@@ -761,6 +922,7 @@ but can be outside the function if being used in a Python script.
 
 
 .. parsed-literal::
+    :class: code-output
 
     array([3, 5, 7])
 
@@ -769,7 +931,7 @@ but can be outside the function if being used in a Python script.
 Now that you understand the basics, feel free to play around with more
 complicated scenarios! You can also check out our additional API and
 example usage tutorials on our `docs
-site <https://runhouse-docs.readthedocs-hosted.com/en/latest/index.html>`__.
+site <https://www.run.house/docs>`__.
 
 Cluster Termination
 -------------------
