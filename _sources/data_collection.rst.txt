@@ -5,7 +5,7 @@ This data will only be used by Runhouse to improve the product.
 No Personal Identifiable Information (PII) is collected and we will not sell or buy data about you.
 
 Cluster Metadata
-------------------------------------
+----------------
 We collect non-sensitive data on the cluster that helps us understand how Runhouse is being used. This data includes:
 
 - Python version
@@ -13,6 +13,7 @@ We collect non-sensitive data on the cluster that helps us understand how Runhou
 - Cloud provider
 - Region
 - Instance type
+
 
 Performance & Error Monitoring
 ------------------------------------
@@ -32,3 +33,36 @@ local Runhouse config (:code:`~/.rh/config.yaml`), or in Python:
 
     import runhouse as rh
     rh.configs.disable_data_collection()
+
+Cluster Auth
+------------
+Runhouse provides a couple of options for managing the connection to the Runhouse API server running on the cluster
+
+API Server Connection
+~~~~~~~~~~~~~~~~~~~~~
+
+The below options can be specified with the ``server_connection_type`` parameter
+when :ref:`initializing a cluster <Cluster Factory Method>`:
+
+- ``ssh``: Connects to the cluster via port forwarding. The API server will be started with HTTP.
+- ``tls``: Connects to the cluster via port forwarding and enforces verification via TLS certificates. The API server
+  will be started with HTTPS. Only users with a valid cert will be able to make requests to the API server.
+- ``none``: Default connection type, which does not use any port forwarding or enforce any authentication. The API
+  server will be started with HTTP.
+
+.. note::
+
+    The ``tls`` connection type is the most secure and is recommended for production use if you are not running inside
+    of a VPC.
+
+API Server Auth
+~~~~~~~~~~~~~~~
+
+Runhouse let's you control whether to authenticate users via a Runhouse token (generated when
+:ref:`logging in <Login/Logout>`). When :ref:`initializing a cluster <Cluster Factory Method>`, you can set
+the ``den_auth`` parameter to ``True`` to enable it.
+
+.. tip::
+
+    Using TLS and Den Auth makes it incredibly fast and easy to stand up a microservice with standard bearer
+    token authentication, allowing users to share Runhouse resources with collaborators, teams, customers, etc.
