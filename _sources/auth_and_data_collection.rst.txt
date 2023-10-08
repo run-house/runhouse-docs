@@ -36,7 +36,8 @@ local Runhouse config (:code:`~/.rh/config.yaml`), or in Python:
 
 Cluster Auth
 ------------
-Runhouse provides a couple of options for managing the connection to the Runhouse API server running on the cluster
+Runhouse provides a couple of options to manage the connection to the Runhouse API server running on a cluster.
+
 
 API Server Connection
 ~~~~~~~~~~~~~~~~~~~~~
@@ -58,11 +59,38 @@ when :ref:`initializing a cluster <Cluster Factory Method>`:
 API Server Auth
 ~~~~~~~~~~~~~~~
 
-Runhouse let's you control whether to authenticate users via a Runhouse token (generated when
-:ref:`logging in <Login/Logout>`). When :ref:`initializing a cluster <Cluster Factory Method>`, you can set
-the ``den_auth`` parameter to ``True`` to enable it.
+Runhouse allows you to authenticate users via their Runhouse token (generated when
+:ref:`logging in <Login/Logout>`) and saved to local Runhouse configs in path: :code:`~/.rh/config.yaml`.
 
-.. tip::
+When :ref:`initializing a cluster <Cluster Factory Method>`, you can set the :code:`den_auth` parameter to :code:`True`
+to enable token authentication. Runhouse will handle adding the token to each subsequent request as an auth header with
+format: :code:`{"Authorization": "Bearer <token>"}`
 
-    Using TLS and Den Auth makes it incredibly fast and easy to stand up a microservice with standard bearer
-    token authentication, allowing users to share Runhouse resources with collaborators, teams, customers, etc.
+Enabling TLS and Den Auth for the API server makes it incredibly fast and easy to stand up a microservice with
+standard token authentication, allowing you to easily share Runhouse resources with collaborators, teams,
+customers, etc.
+
+Let's illustrate this with a simple example:
+
+.. code-block:: python
+
+    import runhouse as rh
+
+    def np_array(num_list: list):
+        import numpy as np
+
+        return np.array(num_list)
+
+    cpu = rh.ondemand_cluster(instance_type="m5.xlarge",
+                              provider="aws",
+                              name="rh-cluster",
+                              den_auth=True,
+                              server_connection_type="tls").up_if_not()
+
+    # Remote function stub which lives on the cluster
+    remote_func = rh.function(np_array).to(cpu, env=["numpy"])
+    my_list = [1,2,3]
+
+    # Run function on cluster
+    # Note: only users with a Runhouse token and access to this cluster can call this function
+    res = remote_func(my_list)
