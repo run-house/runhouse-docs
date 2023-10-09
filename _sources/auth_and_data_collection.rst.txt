@@ -1,11 +1,11 @@
-Security and Metadata Collection
-================================
+Security and Authentication
+===========================
 By default, Runhouse collects metadata from provisioned clusters and data relating to performance and error monitoring.
 This data will only be used by Runhouse to improve the product.
 No Personal Identifiable Information (PII) is collected and we will not sell or buy data about you.
 
-Cluster Metadata
-----------------
+Cluster Metadata Collection
+---------------------------
 We collect non-sensitive data on the cluster that helps us understand how Runhouse is being used. This data includes:
 
 - Python version
@@ -34,8 +34,8 @@ local Runhouse config (:code:`~/.rh/config.yaml`), or in Python:
     import runhouse as rh
     rh.configs.disable_data_collection()
 
-Cluster Auth
-------------
+Cluster Authentication & Verification
+-------------------------------------
 Runhouse provides a couple of options to manage the connection to the Runhouse API server running on a cluster.
 
 
@@ -81,6 +81,7 @@ Let's illustrate this with a simple example:
 
         return np.array(num_list)
 
+    # Launch a cluster with TLS and Den Auth enabled
     cpu = rh.ondemand_cluster(instance_type="m5.xlarge",
                               provider="aws",
                               name="rh-cluster",
@@ -94,3 +95,9 @@ Let's illustrate this with a simple example:
     # Run function on cluster
     # Note: only users with a Runhouse token and access to this cluster can call this function
     res = remote_func(my_list)
+
+
+.. note::
+
+    For more examples on using clusters and functions see
+    the :ref:`Compute Guide <Compute: Clusters, Functions, Packages, & Envs>`.
