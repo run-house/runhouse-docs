@@ -48,7 +48,7 @@ when :ref:`initializing a cluster <Cluster Factory Method>`:
 - ``ssh``: Connects to the cluster via port forwarding. The API server will be started with HTTP.
 - ``tls``: Connects to the cluster via port forwarding and enforces verification via TLS certificates. The API server
   will be started with HTTPS. Only users with a valid cert will be able to make requests to the API server.
-- ``default``: Does not use any port forwarding or enforce any authentication. The API server will be started
+- ``none``: Does not use any port forwarding or enforce any authentication. The API server will be started
   with HTTP.
 
 .. note::
