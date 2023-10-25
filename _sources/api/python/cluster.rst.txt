@@ -205,7 +205,8 @@ be started on the cluster on port :code:`32300`.
 .. note::
 
     The ``tls`` connection type is the most secure and is recommended for production use if you are not running inside
-    of a VPC.
+    of a VPC. However, be mindful that you must secure the cluster with authentication (see below) if you open it
+    to the public internet.
 
 Server Authentication
 ~~~~~~~~~~~~~~~~~~~~~
