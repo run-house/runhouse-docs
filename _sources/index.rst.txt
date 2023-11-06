@@ -82,10 +82,10 @@ Table of Contents
 
    debugging_logging
    troubleshooting
-   security_and_authentication
+   data_collection
    Source Code <https://github.com/run-house/runhouse>
    REST API Guide <https://api.run.house/docs>
-   Runhouse Den Dashboard <https://www.run.house/dashboard>
+   Dashboard <https://www.run.house/dashboard>
    Funhouse <https://github.com/run-house/funhouse>
 
 
