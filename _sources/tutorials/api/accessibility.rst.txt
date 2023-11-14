@@ -144,7 +144,7 @@ will extract out the values.
 Login and Saving Secrets
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you have a runhouse account, which you can create
+If you have a Runhouse account, which you can create
 `here <run.house/login>`__ or by calling either the ``runhouse login``
 CLI command or ``rh.login()`` Python command, you can sync secrets (to
 Vault) associated with your account, and download existing secrets or
