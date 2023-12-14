@@ -104,9 +104,9 @@ to your users.
 
 Similar to Google Drive, you can choose how visible you would like each resource to be:
 
-- :code:`private` (default): Only users who have been granted access explictly to the resource can view and access it.
-- :code:`public`: Users can access and search for the resource by its name only (will not be vieweable by default).
-- :code:`searchable`: Resource will be available publicly to all users.
+- :code:`private` (default): Only users who have been granted access explicitly to the resource can view and access it.
+- :code:`unlisted`: Users can access and search for the resource by its name only (will not be vieweable by default).
+- :code:`public`: Resource will be available publicly to all users.
 
 You can specify these options when sharing any Runhouse resource.
 Here are some examples for how that could look when sharing a function:
@@ -115,12 +115,13 @@ Here are some examples for how that could look when sharing a function:
 
     # Share a function with a particular user, giving them write access to the resource and private visibility
     # The function will be visible to the user in their Den dashboard
-    my_func.share("user_a@gmail.com", access_level="write", resource_visibility="private")
+    my_func.share("user_a@gmail.com", access_level="write", global_visibility="private")
 
     # Make this function available to all users, who will be given read access to that resource
-    my_func.share(resource_visibility="searchable")
+    my_func.share(global_visibility="public")
 
-    # Share the function with a list of users, giving them read only access to the resource and public visibility,
-    # The function will not be visible by default in these users' Den dashboards
+    # Share the function with a list of users, giving them read only access to the resource and unlisted visibility,
+    # The function will not be visible by default in these users' Den dashboards, and will only appear
+    # if searched by name
     my_func.share(["user_a@gmail.com", "rh_username_2"],
-                  resource_visibility="public")
+                  global_visibility="unlisted")
