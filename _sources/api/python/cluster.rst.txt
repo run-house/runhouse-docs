@@ -283,7 +283,7 @@ Let's illustrate this with a simple example:
     remote_func.share("user1@gmail.com", access_level="read")
 
     # User1 can then call the function from any environment
-    res = remote_func(a="run", b="house)
+    res = remote_func("run", "house")
 
 
 We can also call the function via an HTTP request, making it easy for other users to call the function with
