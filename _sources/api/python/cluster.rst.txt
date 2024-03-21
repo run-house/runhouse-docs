@@ -358,7 +358,7 @@ Once the app has been created and sent to the cluster, we can call it via HTTP d
 
     import requests
 
-    resp = requests.get("https://<domain>/basic_rag_app/invoke?user_prompt=<encoded_prompt>")
+    resp = requests.get("https://<domain>/basic_rag_app/invoke?user_prompt=<prompt>")
     print(resp.json())
 
 
@@ -366,4 +366,4 @@ Or via cURL:
 
 .. code-block:: cli
 
-     curl "https://<domain>/basic_rag_app/invoke?user_prompt=<encoded_prompt>"
+     curl "https://<domain>/basic_rag_app/invoke?user_prompt=<prompt>"
