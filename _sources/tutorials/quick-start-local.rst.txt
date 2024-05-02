@@ -70,10 +70,7 @@ Deployment
 
 Standing up your Python code on the server is simple with the Runhouse
 API. Wrap the function with ``rh.function``, and then use
-``.to(rh.here)`` to sync it to the server. Note that if you run this code
-as a script, you may need to wrap it in an `if __name__ == "__main__":`
-block to prevent it from being run again inside the server when the function
-is imported there.
+``.to(rh.here)`` to sync it to the server.
 
 .. code:: ipython3
 
