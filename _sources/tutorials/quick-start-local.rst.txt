@@ -116,6 +116,16 @@ Standing up your Python code on the server is simple with the Runhouse
 API. Wrap the function with ``rh.function``, and then use
 ``.to(rh.here)`` to sync it to the server.
 
+.. note::
+
+   Make sure that any code in your Python file that’s meant to only run
+   locally is placed within a ``if __name__ == "__main__":`` block.
+   Otherwise, the script code will run when Runhouse attempts to import
+   your code remotely. This is not necessary when using a notebook.
+   Please see our `examples
+   directory <https://github.com/run-house/runhouse/tree/main/examples>`__
+   for implementation details.
+
 .. code:: ipython3
 
     import runhouse as rh
