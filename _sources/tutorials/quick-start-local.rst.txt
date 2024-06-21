@@ -120,9 +120,10 @@ API. Wrap the function with ``rh.function``, and then use
 
    Make sure that any code in your Python file that’s meant to only run
    locally is placed within a ``if __name__ == "__main__":`` block.
-   Otherwise, the script code will run when Runhouse attempts to import
-   your code remotely. This is not necessary when using a notebook.
-   Please see our `examples
+   Otherwise, that code will run when Runhouse attempts to import your
+   code remotely. For example, you wouldn’t want
+   ``function.to(rh.here)`` to run again on the server. This is not
+   necessary when using a notebook. Please see our `examples
    directory <https://github.com/run-house/runhouse/tree/main/examples>`__
    for implementation details.
 
