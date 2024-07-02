@@ -196,3 +196,22 @@ with the Python API:
 
 Misc.
 ~~~~~
+
+Depending on your application, you may need to configure additional services with Runhouse.
+
+Hugging Face
+------------
+
+For inference and fine-tuning, you might download a model from Hugging Face. For gated models, you'll need you request permission
+and set up your `Hugging Face token <https://huggingface.co/docs/hub/en/security-tokens>` to be used by Runhouse:
+
+.. code-block:: shell
+    $ export HF_TOKEN=<your_huggingface_token>
+
+This can then be included as a builtin `provider secret <https://www.run.house/docs/tutorials/api-secrets#provider-secret>` when creating an env:
+
+.. code-block:: python
+    env = rh.env(
+        ...
+        secrets=["huggingface"],
+    )
