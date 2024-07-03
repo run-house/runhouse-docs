@@ -140,7 +140,6 @@ Some additional providers supported by Runhouse via SkyPilot include:
 - Lambda Cloud
 - & more
 
-
 Cluster Lifecycle Management
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
