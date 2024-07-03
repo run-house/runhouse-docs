@@ -144,8 +144,8 @@ Some additional providers supported by Runhouse via SkyPilot include:
 Cluster Lifecycle Management
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To ensure that you have full control over the availability of your clusters, and the cost associated
-with maintaining them, you can may find the following SkyPilot commands helpful:
+To ensure that you have full control over the availability of your clusters, and the cost associated with maintaining them,
+you may find the following `SkyPilot commands <https://skypilot.readthedocs.io/en/latest/reference/cli.html#cluster-cli>` helpful:
 
 - ``sky status`` - Displays a list of all your clusters by name.
 - ``sky stop <NAME>`` - Stops an instance. This will not fully tear down the cluster in case you need to restart it.
