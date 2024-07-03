@@ -11,8 +11,9 @@ An overview of common installation and setup steps when working with Runhouse.
 Install the Runhouse library
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Optionally, to begin, set up a virtual environment with `Conda <https://conda.io/projects/conda/en/latest/user-guide/install/index.html>`.
-This will allow you to maintain an environment with a specific version of Python and installed packages.
+Optionally, begin by setting up a virtual env with `Conda <https://conda.io/projects/conda/en/latest/user-guide/install/index.html>`
+or your package and environment management tool of choice. This allows you to maintain an environment with a
+specific version of Python and installed packages.
 
 .. code-block:: shell
 
@@ -132,7 +133,7 @@ For more info: `SkyPilot | Azure <https://skypilot.readthedocs.io/en/latest/gett
 Other Providers
 ---------------
 
-For a full list of providers and configuration details: `SkyPilot documentation <>`.
+For a full list of providers and configuration details: `SkyPilot documentation <https://skypilot.readthedocs.io/en/latest/getting-started/installation.html#cloud-account-setup>`.
 Some additional providers supported by Runhouse via SkyPilot include:
 
 - Kubernetes
@@ -193,25 +194,3 @@ with the Python API:
 .. code-block:: python
     import runhouse as rh
     rh.login()
-
-Misc.
-~~~~~
-
-Depending on your application, you may need to configure additional services with Runhouse.
-
-Hugging Face
-------------
-
-For inference and fine-tuning, you might download a model from Hugging Face. For gated models, you'll need you request permission
-and set up your `Hugging Face token <https://huggingface.co/docs/hub/en/security-tokens>` to be used by Runhouse:
-
-.. code-block:: shell
-    $ export HF_TOKEN=<your_huggingface_token>
-
-This can then be included as a builtin `provider secret <https://www.run.house/docs/tutorials/api-secrets#provider-secret>` when creating an env:
-
-.. code-block:: python
-    env = rh.env(
-        ...
-        secrets=["huggingface"],
-    )
