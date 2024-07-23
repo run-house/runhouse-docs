@@ -23,18 +23,18 @@ Why?
 This solves a few major problems for AI teams:
 
 #. **Cost**: Runhouse introduces the flexibility to allocate compute only while needed, right-size instances based on
-    the size of the workload, work across multiple regions or clouds for lower costs, and share compute and services
-    across tasks. Users typically see cost savings on the order of 50-75%, depending on the workload.
+   the size of the workload, work across multiple regions or clouds for lower costs, and share compute and services
+   across tasks. Users typically see cost savings on the order of 50-75%, depending on the workload.
 #. **Development at scale**: Powerful hardware such as GPUs or distributed clusters (Spark, Ray) can be hugely
-    disruptive, requiring all development, debugging, automation, and deployment to occur on their runtime. Ray, Spark,
-    or PyTorch distributed users for example must be tunneled into the head node at all times for development, leading
-    to a proliferation of hosted notebook services as a stop-gap. Runhouse allows Python to orchestrate to these
-    systems remotely, returning the development workflow and operations to standard Python. Teams using Runhouse
-    can abandon hosted development notebooks and sandboxes entirely, again saving considerable cost and
-    research-to-production time.
+   disruptive, requiring all development, debugging, automation, and deployment to occur on their runtime. Ray, Spark,
+   or PyTorch distributed users for example must be tunneled into the head node at all times for development, leading
+   to a proliferation of hosted notebook services as a stop-gap. Runhouse allows Python to orchestrate to these
+   systems remotely, returning the development workflow and operations to standard Python. Teams using Runhouse
+   can abandon hosted development notebooks and sandboxes entirely, again saving considerable cost and
+   research-to-production time.
 #. **Infrastructure overhead**: Runhouse thoughtfully captures infrastructure concerns in code, providing a clear
-    contract between the application and infrastructure, and saving ML teams from learning all the infra, networking,
-    security, and DevOps underneath.
+   contract between the application and infrastructure, and saving ML teams from learning all the infra, networking,
+   security, and DevOps underneath.
 
 High-level Flow
 ---------------
