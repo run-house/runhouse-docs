@@ -70,7 +70,7 @@ annotated code snippet:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
-    gpu = rh.cluster(name="rh-a10x", instance_type="A10G:1", provider="aws").up_if_not()
+    gpu = rh.cluster(name="rh-a10x", instance_type="A10G:1", provider="aws")
 .. note::
 
 Runhouse can allocate compute to the application on the fly, either by
