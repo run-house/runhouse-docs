@@ -11,14 +11,6 @@ visualize, and manage your resources along with version history.
 Installing Runhouse
 -------------------
 
-<<<<<<< HEAD
-`Runhouse Den <https://www.run.house/dashboard>`__ lets you manage and
-track your infra, services, and resources (clusters, functions, secrets,
-etc). These resources can be easily reloaded from any environment, and
-ready to be used without additional setup, or even shared with another
-user or teammate. Then, in the Web UI, access, visualize, and manage
-your resources, along with version history.
-=======
 To use Runhouse to launch on-demand clusters, run the following
 installation command. This includes
 `SkyPilot <https://github.com/skypilot-org/skypilot>`__, which is used
@@ -27,7 +19,6 @@ for launching fresh VMs through various cloud providers.
 .. code:: ipython3
 
     !pip install "runhouse[sky]"
->>>>>>> v0.0.32
 
 Account Creation & Login
 ------------------------
@@ -59,9 +50,6 @@ Saving
 
 Let’s start by constructing some runhouse resources that we’d like to
 save down. These resources were first defined in our `Cloud Quick Start
-<<<<<<< HEAD
-Tutorial <https://www.run.house/docs/tutorials/quick-start-cloud>`__.
-=======
 Tutorial <https://www.run.house/docs/tutorials/quick-start-cloud>`__. As
 a reminder, you may need to confirm that your cloud credentials are
 properly configured by running ``sky check``.
@@ -76,7 +64,6 @@ properly configured by running ``sky check``.
    necessary when using a notebook. Please see our `examples
    directory <https://github.com/run-house/runhouse/tree/main/examples>`__
    for implementation details.
->>>>>>> v0.0.32
 
 .. code:: ipython3
 
@@ -114,27 +101,8 @@ properly configured by running ``sky check``.
     def get_platform(a = 0):
             import platform
             return platform.platform()
-<<<<<<< HEAD
 
     remote_get_platform = rh.function(get_platform).to(cluster)
-
-
-.. parsed-literal::
-    :class: code-output
-
-    INFO | 2024-05-16 03:51:58.483032 | Because this function is defined in a notebook, writing it out to /Users/donny/code/notebooks/docs/get_platform_fn.py to make it importable. Please make sure the function does not rely on any local variables, including imports (which should be moved inside the function body). This restriction does not apply to functions defined in normal Python files.
-    INFO | 2024-05-16 03:51:58.493093 | Port 32300 is already in use. Trying next port.
-    INFO | 2024-05-16 03:51:58.494347 | Forwarding port 32301 to port 32300 on localhost.
-    INFO | 2024-05-16 03:51:59.587613 | Server rh-cluster is up.
-    INFO | 2024-05-16 03:51:59.595752 | Copying package from file:///Users/donny/code/notebooks to: rh-cluster
-    INFO | 2024-05-16 03:52:00.716693 | Calling _cluster_default_env.install
-    INFO | 2024-05-16 03:52:01.235732 | Time to call _cluster_default_env.install: 0.52 seconds
-    INFO | 2024-05-16 03:52:01.252665 | Sending module get_platform of type <class 'runhouse.resources.functions.function.Function'> to rh-cluster
-
-=======
-
-    remote_get_platform = rh.function(get_platform).to(cluster)
->>>>>>> v0.0.32
 
 
 .. parsed-literal::
