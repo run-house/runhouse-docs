@@ -62,21 +62,6 @@ they want to take on the data without needed to dig into provider-specific APIs.
    python/folder
 
 
-For example, you can easily load data on a cluster directly from s3, without needing to bounce the data off
-your laptop.
-
-.. code-block:: python
-
-    import runhouse as rh
-
-    # Load a folder which points to a particular directory on S3
-    s3_folder = rh.folder(path"/main-bucket/my-folder", system="s3")
-
-    # Load an existing cluster and send the s3 folder to a specified path on the cluster
-    remote_cluster = rh.cluster(name="/my-username/my-cluster")
-    s3_folder.to(system=remote_cluster, path="~/my-folder")
-
-
 
 Secrets
 ------------------------------------
