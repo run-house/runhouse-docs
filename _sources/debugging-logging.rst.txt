@@ -23,8 +23,8 @@ Alternatively, to see logs on your local machine while running a remote function
 
 Log Levels
 ----------
-You can set the log level to control the verbosity of the logs. The default log level is ``INFO``, and you can adjust
-the log level by setting the environment variable ``RH_LOG_LEVEL`` to your desired level.
+You can set the log level to control the verbosity of the Runhouse logs. You can adjust the log level by
+setting the environment variable ``RH_LOG_LEVEL`` to your desired level.
 
 Debugging
 ~~~~~~~~~
