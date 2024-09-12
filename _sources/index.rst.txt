@@ -1,7 +1,7 @@
 .. runhouse documentation master file, created by
 
 🏃‍♀️ Runhouse Docs 🏠
-==================
+======================
 
 .. raw:: html
 
@@ -50,7 +50,8 @@ Table of Contents
    tutorials/async.rst
    installation
    debugging-logging
-   docker
+   docker-setup
+   docker-workflows
    troubleshooting
    security-and-authentication
 
