@@ -48,21 +48,6 @@ Let’s set up a basic cluster and some easy logic to send to it.
     cluster = rh.cluster(name="multi-gpu-cluster", accelerators="A10G:1", num_nodes=2, provider="aws").up_if_not()
 
 
-
-.. raw:: html
-
-    <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #008000; text-decoration-color: #008000">⠹</span> <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">Preparing SkyPilot runtime (3/3 - runtime)</span>
-    </pre>
-
-
-
-
-.. raw:: html
-
-    <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-
-
-
 .. parsed-literal::
     :class: code-output
 
@@ -74,28 +59,6 @@ Let’s set up a basic cluster and some easy logic to send to it.
     ml_ready_cluster   1 hr ago        1x AWS(m6i.large, image_id={'us-east-1': 'docker:python:3.12.8-bookwor...  UP      (down)    /Users/rohinbhasin/minico...
 
     [?25h
-
-
-.. parsed-literal::
-    :class: code-output
-
-    Output()
-
-
-
-.. raw:: html
-
-    <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-
-
-
-
-.. raw:: html
-
-    <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">
-    </pre>
-
-
 
 We can now create processes based on whatever requirements we want.
 Covering all the examples above:
