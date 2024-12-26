@@ -109,9 +109,10 @@ Sample Function
 The function we’ll be using in our demo is ``is_transformers_available``
 from ``diffusers.utils``. We’ll first show how to use the base version
 of this function, which was installed on the box through the cluster
-setup (e.g. a production setting). Then, we’ll show how if you have a
-locally edited version of the same function/package on the cluster, how
-to propagate up your local changes and run them on the cluster.
+setup (e.g. a production setting). Then, we’ll show how to propogate up
+local changes and run them on the cluster, if your local version differs
+from the one in the Docker container (e.g. different package version, or
+locally edited).
 
 .. code:: ipython3
 
