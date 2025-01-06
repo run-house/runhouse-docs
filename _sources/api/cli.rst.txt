@@ -1,12 +1,14 @@
 Command Line Interface
 ------------------------------------
-Runhouse provides CLI commands for the following use cases:
+Runhouse provides CLI commands for logging in/out, and for basic interaction
+with the cluster.
 
-* logging in and out (``runhouse login/logout``)
-* interacting with or retrieving information about clusters (``runhouse cluster <cmd>``)
-* interacting with the Runhouse server (``runhouse server <cmd>``)
+The commands can be run like follows (using either `runhouse` or the `rh` alias):
 
-The commands can be run using either ``runhouse`` or the ``rh``` alias
+.. code-block:: console
+
+   $ runhouse login
+   $ runhouse cluster ssh cluster_name
 
 .. automodule:: runhouse.main
    :members: login, logout, cluster_ssh, server_start, server_restart, server_stop, server_status, cluster_status, cluster_list, cluster_keep_warm, cluster_up, cluster_down, cluster_logs
