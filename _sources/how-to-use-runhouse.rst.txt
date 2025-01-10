@@ -12,8 +12,8 @@ Before reviewing this detailed guide, we recommend you start with the `Quick Sta
 * Install Runhouse with ``pip install runhouse``
 
 * Optionally install with a specific cloud like ``pip install "runhouse[aws]"`` or with
-  `SkyPilot <https://skypilot.readthedocs.io/en/latest/docs/index.html>`_ for elastic compute
-  ``pip install "runhouse[sky]"``
+  `SkyPilot <https://skypilot.readthedocs.io/en/latest/docs/index.html>`_ for elastic compute with
+  :code:`pip install "runhouse[sky]"`
 
 * Optionally create an account on the `Runhouse website <https://www.run.house/dashboard>`_ or with
   ``runhouse login --sync-secrets`` to enable saving, reloading, and centralized authentication / secrets management.
@@ -112,6 +112,11 @@ connection (either over SSH or HTTP/S).
 
 * The HTTP server and workers can handle thousands of concurrent calls per second, and have similar latency to Flask
   under most conditions.
+
+.. note::
+
+    To run the daemon on your local machine, you will need a few additional requirements not included
+    in the base Runhouse package. You can install them by running ``pip install runhouse[server]``.
 
 2. Dispatch Your Code
 ^^^^^^^^^^^^^^^^^^^^^^
