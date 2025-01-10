@@ -116,7 +116,7 @@ connection (either over SSH or HTTP/S).
 .. note::
 
     To run the daemon on your local machine, you will need a few additional requirements not included
-    in the base Runhouse package. You can install them by running ``pip install runhouse[server]``.
+    in the base Runhouse package. You can install them by running :code:`pip install "runhouse[server]"`.
 
 2. Dispatch Your Code
 ^^^^^^^^^^^^^^^^^^^^^^
