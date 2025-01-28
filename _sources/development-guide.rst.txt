@@ -244,7 +244,7 @@ a source file), and then reusing the object and cluster by name across steps.
 
       @task()
       def embed():
-            cluster = rh.compute(name="rh-cluster")
+            cluster = rh.cluster(name="rh-cluster")
             trainer = cluster.get(name='remote-instance-of-trainer')
             X, y = ...  # Load data
             trainer.train(X,y)

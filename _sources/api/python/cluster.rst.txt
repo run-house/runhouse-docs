@@ -203,7 +203,7 @@ before launching the cluster by specifying the :code:`domain` argument:
 
 .. code-block:: python
 
-     cluster = rh.compute(name="rh-serving-cpu",
+     cluster = rh.cluster(name="rh-serving-cpu",
                           domain="<your domain>",
                           instance_type="m5.xlarge",
                           server_connection_type="tls",
@@ -223,7 +223,7 @@ initializing the Runhouse cluster object:
 
 .. code-block:: python
 
-     cluster = rh.compute(name="rh-serving-cpu",
+     cluster = rh.cluster(name="rh-serving-cpu",
                           ips=["<public IP>"],
                           domain="<your domain>",
                           server_connection_type="tls",
