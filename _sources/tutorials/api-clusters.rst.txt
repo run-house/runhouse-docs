@@ -56,6 +56,7 @@ types on AWS).
     import runhouse as rh
 
     aws_cluster = rh.cluster(name="test-cluster", instance_type="CPU:2")
+    aws_cluster.up_if_not()
 
 Next, we set up a basic function to throw up on our cluster. For more
 information about Functions & Modules that you can put up on a cluster,
@@ -93,6 +94,13 @@ remotely on your AWS instance.
     'Run home in cluster!!'
 
 
+On-Demand Clusters within Existing Cloud VPC
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you would like to launch on-demand clusters using existing VPCs,
+you can easily set it up by specifying the :code:`vpc_name` argument when initializing a cluster.
+Without setting VPC, we launch in the default VPC in the region of the cluster.
+
+If you need support for more advanced enterprise configurations, please email support@run.house for more information.
 
 On-Demand Clusters with TLS exposed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -109,7 +117,7 @@ and access objects and functions via ``curl``.
                              open_ports=[443], # expose HTTPS port to public
                              server_connection_type="tls", # specify how runhouse communicates with this cluster
                              den_auth=False, # no authentication required to hit this cluster (NOT recommended)
-    )
+    ).up_if_not()
 
 
 .. parsed-literal::
@@ -147,7 +155,7 @@ and access objects and functions via ``curl``.
 
 .. code:: ipython3
 
-    tls_cluster.address
+    tls_cluster.head_ip
 
 
 
